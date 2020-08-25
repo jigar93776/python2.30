@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">E-Book</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Book Category <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'python' %}">Python</a></li>
+          <li><a href="{% url 'java' %}">Java</a></li>
+          <li><a href="{% url 'php' %}">PHP</a></li>
+        </ul>
+      </li>
+      <li><a href="{% url 'contact' %}">Contact Us</a></li>
+    </ul>
+
+    <form class="navbar-form navbar-left" action="#">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    {% if request.session.fname %}
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'wishlist' %}"><span class="glyphicon glyphicon-heart"></span>   WishList({{request.session.wishlist}})</a></li>
+        <li><a href="{% url 'mycart' %}"><span class="glyphicon glyphicon-shopping-cart"></span>   MyCart({{request.session.mycart}})</a></li>
+        <li><a href="{% url 'change_password' %}"><span class="glyphicon glyphicon-edit"></span>   Change Password</a></li>
+        <li><img src="{{request.session.userimage}}" width="50px" height="50px">></li>
+        <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-edit"></span> Profile  </a></li>
+        <li><a href="{% url 'logout' %}">{{request.session.fname}}   <span class="glyphicon glyphicon-log-in"></span>   Logout</a></li>
+      </ul>
+    {% else %}
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    {% endif %}
+    
+  </div>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>

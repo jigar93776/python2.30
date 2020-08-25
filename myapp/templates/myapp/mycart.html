@@ -1,0 +1,47 @@
+{% extends 'myapp/header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		td
+		{
+			padding: 5px 5px 7px 5px;
+		}
+	</style>
+</head>
+<body>
+	{% if not mycart %}
+		<center><h3>No Books Added</h3></center>
+	{% else %}
+		<center><h3>Total Books : {{mycart.count}}</h3></center>
+	{% endif %}
+	<div class="row">
+		{% for b in mycart %}
+			<div id="box" class="col-sm-3">
+				<div class="container">
+			  		<div class="card" style="width:250px">
+			    		<img class="card-img-top" src="{{b.book.book_image.url}}" alt="Card image" width=250px height=250px>
+			    			<div class="card-body">
+			      				<h6 class="card-title">Book Name : {{b.book.book_name}}</h4>
+			      				<p class="card-text">Book Price : {{b.book.book_price}}</p>
+
+			      				<a href="{% url 'remove_cart' pk=b.pk %}">Remove</a>
+			      				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      				<a href="{% url 'add_to_wishlist' pk=b.pk %}">WishList</a>
+			    			</div>
+			  		</div>	  
+				</div>
+			</div>
+		{% endfor %}
+		
+	</div>
+	<form name="pay" method="post" action="{% url 'pay' %}">
+		{% csrf_token %}
+			<input type="label" name="amount" value="{{total_price}}" readonly="readonly">
+			<input type="submit" name="submit" value="Submit">
+		</form>
+{% endblock %}
+</body>
+</html>

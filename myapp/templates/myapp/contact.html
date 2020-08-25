@@ -1,0 +1,59 @@
+{% extends 'myapp/header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		td
+		{
+			padding: 5px 5px 7px 5px;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<h3>
+			{% if msg %}
+				{{msg}}
+			{% endif %}
+		</h3>
+	</center>
+	<center><h1>Contact US</h1>
+	<form name="contact" method="post" action="{% url 'contact' %}">
+		{% csrf_token %}
+		<table cellpadding="5">
+			<tr>
+				<td>Name</td>
+				<td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td><input type="text" name="email"></td>
+			</tr>
+			<tr>
+				<td>Mobile</td>
+				<td><input type="text" name="mobile"></td>
+			</tr>
+			<tr>
+				<td>Remarks</td>
+				<td><textarea rows="5" cols="21" name="remarks"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" name="submit" value="Submit">
+				</td>
+			</tr>
+		</table>
+	</form>	
+	</center>
+	<h2><p>Recent Remarks</p></h2>
+	<hr class="alert-danger">
+	{% for i in contacts %}
+		<p><b>Name</b> : {{i.name}}</p>
+		<p><b>Remarks</b> : {{i.remarks}}</p>
+		<hr class="alert-danger">
+	{% endfor %}
+{% endblock %}
+</body>
+</html>

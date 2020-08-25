@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{% url 'seller_index' %}">E-Book</a>
+    </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{% url 'seller_index' %}"><span class="glyphicon glyphicon-home"></span></a></li>
+        
+        <li><a href="{% url 'add_book' %}">Add Book</a></li>
+        <li><a href="{% url 'view_book' %}">View Book</a></li>
+        <li><a href="{% url 'inactive_books' %}">Inactive Books</a></li>
+    </ul>
+
+    <form class="navbar-form navbar-left" method="post" action="{% url 'search_book' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" class="form-control" placeholder="Search" name="search">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    {% if request.session.fname %}
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'change_password' %}"><span class="glyphicon glyphicon-edit"></span>   Change Password</a></li>
+        <li><img src="{{request.session.userimage}}" width="50px" height="50px">></li>
+        <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-edit"></span> Profile  </a></li>
+        <li><a href="{% url 'logout' %}">{{request.session.fname}}   <span class="glyphicon glyphicon-log-in"></span>   Logout</a></li>
+      </ul>
+    {% else %}
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    {% endif %}
+    
+  </div>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>
